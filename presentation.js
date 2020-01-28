@@ -1,21 +1,26 @@
 function afficherMenu(){
     console.log('** Administration Hotel **');
     console.log('1. Lister les clients');
+    console.log('2. Ajouter un client');
+    console.log('3. Rechercher un client par nom');
+    console.log("4. Vérifier la disponibilité d'une chambre");
     console.log('99. Sortir');
 }
 
+var service = require('./service.js');
+
+// récupération du module 'readline'
+var readline = require('readline');
+
+// création d'un objet 'rl' permettant de récupérer la saisie utilisateur
+var rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
 function choisirOption(){
 
-    var service = require('./service.js');
-
-    // récupération du module 'readline'
-    var readline = require('readline');
-
-    // création d'un objet 'rl' permettant de récupérer la saisie utilisateur
-    var rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
+    afficherMenu();
 
     // récupération de la saisie utilisateur
     rl.question('Veuillez choisir une option dans le menu : ', function(saisie) {
@@ -31,18 +36,60 @@ function choisirOption(){
                         console.log(data[i].nom+" "+data[i].prenoms);
                     }
                     console.log("\n");
-                    afficherMenu();
                     choisirOption();
                 });
                 break;
-            default:
+            case '2':
+
+                console.log(">>Ajouter un client");
+               
+                var nom ="";
+                var prenoms="";
+                rl.question('Saisir un nom : ', (saisieNom) => {
+                    nom = saisieNom;
+
+                    rl.question('Saisir des prénoms : ', (saisiePrenoms) => {
+                        prenoms = saisiePrenoms;
+                        service.ajouterClients(nom,prenoms,function(data){
+                            console.log(data+"\n");
+                            choisirOption();
+                        });
+                    })
+                });
+                break;
+
+            case '3':
+
+                console.log(">>Recherche un client par nom");
+                
+                rl.question('Saisir un nom : ', (saisieNom) => {
+                    nom = saisieNom;
+                    service.rechercherClientsParNom(nom,function(data){
+                        data.forEach(function(liste) {
+                            console.log(liste.nom+" "+liste.prenoms);
+                        });
+                        console.log("\n");
+                        choisirOption();
+                    });
+                });
+                break;
+
+            case '4':
+
+                console.log(">>Chambres disponibles");
+                console.log("Bad request\n");
+                choisirOption();
+                break;
+
+            case '99':
                 console.log("Au revoir");
+                rl.close();// attention, une fois l'interface fermée, la saisie n'est plus possible
+                break;
+            default:
+                choisirOption();
                 break;
         }
-
-
-        rl.close();// attention, une fois l'interface fermée, la saisie n'est plus possible
     });
 }
-exports.afficher=afficherMenu();
+
 exports.choisir=choisirOption();
