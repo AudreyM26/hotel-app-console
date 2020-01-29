@@ -37,8 +37,12 @@ function choisirOption(){
                     }
                     console.log("\n");
                     choisirOption();
+                },
+                function(erreur){
+                    console.log("Erreur "+erreur);
                 });
                 break;
+
             case '2':
 
                 console.log(">>Ajouter un client");
@@ -51,10 +55,13 @@ function choisirOption(){
                     rl.question('Saisir des prénoms : ', (saisiePrenoms) => {
                         prenoms = saisiePrenoms;
                         service.ajouterClients(nom,prenoms,function(data){
-                            console.log(data+"\n");
+                            console.log(data);
                             choisirOption();
                         });
                     })
+                },
+                function(erreur){
+                    console.log("Erreur "+erreur);
                 });
                 break;
 
@@ -77,8 +84,19 @@ function choisirOption(){
             case '4':
 
                 console.log(">>Chambres disponibles");
-                console.log("Bad request\n");
-                choisirOption();
+                let dateDebut="2020-03-09";
+                let dateFin="2020-03-16";
+
+                service.listerChambresDispos(dateDebut,dateFin,function(chambres){
+                    chambres.forEach(function(chambre){
+                        console.log(`numéro : ${chambre.numero}  surface : ${chambre.surfaceEnM2}`);
+                    });
+                    console.log("\n");
+                    choisirOption();
+                },
+                function(erreur){
+                    console.log("Erreur "+erreur);
+                });
                 break;
 
             case '99':
