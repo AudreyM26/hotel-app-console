@@ -11,6 +11,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "request": "^2.88.0"
+    "@types/node": "^13.5.2",
+    "@types/request-promise-native": "^1.0.17",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.8",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5"
   }
 }

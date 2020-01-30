@@ -1,2 +1,2 @@
 
-var menu = require('./presentation.js');
+const menu = require('./presentation.js');
