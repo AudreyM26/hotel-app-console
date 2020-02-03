@@ -3,11 +3,11 @@ import request from 'request-promise-native';
 const urlClients = 'https://audrey-hotel-web-api.herokuapp.com/clients';
 const urlChambres = 'https://audrey-hotel-web-api.herokuapp.com/chambres';
 
-import {Client,Chambre} from './domain';
+import {Client,Chambre,ClientCls} from './domain';
 
 export class Service{
 
-    listerClients():Promise<Client[]>{
+    listerClients():Promise<ClientCls[]>{
         return request(urlClients, { json: true });
     }
 

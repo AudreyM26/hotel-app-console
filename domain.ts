@@ -3,8 +3,7 @@ interface Client {
     prenoms: string;
 }
 
-export class Clientss {
-
+class ClientCls {
     constructor(public nom: string, public prenoms: string) {
     }
 }
@@ -15,4 +14,4 @@ interface Chambre {
     surfaceEnM2:string;
 }
 
-export {Client,Chambre};
+export {Client,Chambre,ClientCls};
